@@ -19,3 +19,58 @@
     </div>
 </body>
 </html>
+
+<!-- ChatGPT story -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT Website</title>
+</head>
+<body>
+    <h1>Generated Text:</h1>
+    <div id="generated-text"></div>
+</body>
+</html>
+
+<script>
+    // Function to generate text using ChatGPT
+    async function generateText() {
+        const apiKey = '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'; // Replace with your API key
+        const apiUrl = 'https://api.openai.com/v1/engines/gpt-3.5/completions
+'; // Replace with the API URL
+
+        // Request payload (customize as needed)
+        const requestData = {
+            prompt: 'Generate text using ChatGPT',
+            max_tokens: 50,
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify(requestData),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const generatedText = data.choices[0].text;
+
+                // Update the content of the div with the generated text
+                document.getElementById('generated-text').textContent = generatedText;
+            } else {
+                console.error('Failed to generate text:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // Call the generateText function when the page loads
+    window.addEventListener('load', generateText);
+</script>
